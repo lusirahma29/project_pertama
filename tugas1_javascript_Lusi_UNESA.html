@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menghitung Luas Bangun Datar</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h2 style="margin: 0;">
+            Menghitung luas dari persegi panjang, bujur sangkar dan segitiga menggunakan variabel dan operator
+        </h2>
+    </div>
+    <br><br>
+    <script>
+        //deklarasi dan inisiasi variabel konstanta
+        let panjang = 10;
+        let lebar = 7;
+        let sisi = 9;
+        let alas = 5;
+        let tinggi = 8;
+        const setengah = 0.5;
+
+        //Hitung Luas masing-masing bangun datar
+        //Persegi panjang
+        let luaspersegipanjang = panjang * lebar;
+        //bujur sangkar
+        let luasbujursangkar = sisi * sisi;
+        //segitiga
+        let luassegitiga = 0.5 * alas * tinggi;
+
+        //cetak
+        document.write(
+            "Diketahui panjang dan lebar sebuah persegi panjang: " + panjang + "cm dan " + lebar + "cm" +
+            "<br>Maka Luas Persegi Panjang: " + luaspersegipanjang + "cm²"
+        );
+
+        document.write(
+            "<br><br>Diketahui sisi sebuah bujur sangkar: " + sisi + "cm" +
+            "<br>Maka Luas Bujur Sangkar: " + luasbujursangkar + "cm²"
+        );
+
+        document.write(
+            "<br><br>Diketahui alas dan tinggi sebuat segitiga: " + alas + "cm dan " + tinggi + "cm" +
+            "<br>Maka Luas seditiga: " + luassegitiga + "cm²"
+        );
+    </script>
+</body>
+
+</html>
