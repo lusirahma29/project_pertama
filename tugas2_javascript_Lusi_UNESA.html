@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menghitung gapok</title>
+</head>
+
+<body>
+    <script>
+        let pegawai = "Dodi Prayodi";
+        let umur = 25;
+        let jabatan = "Manajer";
+        let status = "Menikah";
+
+        // gaji pokok menggunakan if
+        let gapok = 0;
+        if (jabatan == "Manajer") {
+            gapok = 15000000;
+        } else if (jabatan == "Asisten Manajer") {
+            gapok = 10000000;
+        } else if (jabatan == "Staff") {
+            gapok = 5000000;
+        }
+
+        //tunjangan jabatan 15% dari gapok
+        let tunjanganJabatan = 0.15 * gapok;
+        //bpjs 10% dari gapok
+        let bpjs = 0.10 * gapok;
+        //tunjangan keluarga dilihat dari status, menikah = 20% dari gapok (ternary)
+        let tunjanganKeluarga = (status == "Menikah") ? 0.20 * gapok : 0;
+        //total gaji
+        let totalGaji = gapok + tunjanganJabatan + tunjanganKeluarga - bpjs;
+
+        //tabel
+        document.write(`
+        <h2>Gaji Pokok Pegawai</h2>
+    <table border="1" cellpadding="8">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Umur</th>
+          <th>Jabatan</th>
+          <th>Status</th>
+          <th>Gaji Pokok</th>
+          <th>Tunjangan Jabatan</th>
+          <th>BPJS</th>
+          <th>Tunjangan Keluarga</th>
+          <th>Total Gaji</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${pegawai}</td>
+          <td>${umur}</td>
+          <td>${jabatan}</td>
+          <td>${status}</td>
+          <td>${gapok}</td>
+          <td>${tunjanganJabatan}</td>
+          <td>${bpjs}</td>
+          <td>${tunjanganKeluarga}</td>
+          <td>${totalGaji}</td>
+        </tr>
+      </tbody>
+    </table>
+  `);
+    </script>
+</body>
+
+</html>
