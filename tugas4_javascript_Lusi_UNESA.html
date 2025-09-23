@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Transportasi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Sistem Manajemen Transportasi</h2>
+    <button onclick="tampilkanDaftar()">Tampilkan Daftar Pelanggan</button>
+    <div id="output">Belum ada data ditampilkan</div>
+
+    <script>
+        class Kendaraan {
+            constructor(merk, model, tahun) {
+                this.merk = merk;
+                this.model = model;
+                this.tahun = tahun;
+            }
+            getInfo() {
+                return `${this.merk} ${this.model} (${this.tahun})`;
+            }
+        }
+
+        class Mobil extends Kendaraan {
+            constructor(merk, model, tahun, platNomor) {
+                super(merk, model, tahun);
+                this.platNomor = platNomor;
+            }
+            getInfo() {
+                return `${super.getInfo()}, Plat Nomor: ${this.platNomor}`;
+            }
+        }
+
+        class Motor extends Kendaraan {
+            constructor(merk, model, tahun) {
+                super(merk, model, tahun);
+            }
+        }
+
+        class Pelanggan {
+            constructor(nama, nomorTelepon) {
+                this.nama = nama;
+                this.nomorTelepon = nomorTelepon;
+                this.kendaraanDisewa = null;
+            }
+            sewaKendaraan(kendaraan) {
+                this.kendaraanDisewa = kendaraan;
+            }
+            getInfo() {
+                return `${this.nama} (${this.nomorTelepon}) menyewa ${this.kendaraanDisewa.getInfo()}`;
+            }
+        }
+
+        class SistemTransportasi {
+            constructor() {
+                this.daftarPelanggan = [];
+            }
+            tambahTransaksi(pelanggan, kendaraan) {
+                pelanggan.sewaKendaraan(kendaraan);
+                this.daftarPelanggan.push(pelanggan);
+            }
+            getDaftarPelangganHTML() {
+                if (this.daftarPelanggan.length === 0) return "<p>Belum ada pelanggan</p>";
+                return "<ul>" + this.daftarPelanggan.map(p => `<li>${p.getInfo()}</li>`).join("") + "</ul>";
+            }
+        }
+
+        const avanza = new Mobil("Toyota", "Avanza", 2022, "S 4758 ABC");
+        const hondaBeat = new Motor("Honda", "Beat", 2021);
+
+        const pelanggan1 = new Pelanggan("Andi", "08123456789");
+        const pelanggan2 = new Pelanggan("Siti", "08198765432");
+
+        const sistem = new SistemTransportasi();
+        sistem.tambahTransaksi(pelanggan1, avanza);
+        sistem.tambahTransaksi(pelanggan2, hondaBeat);
+
+        function tampilkanDaftar() {
+            document.getElementById("output").innerHTML = sistem.getDaftarPelangganHTML();
+        }
+    </script>
+</body>
+
+</html>
