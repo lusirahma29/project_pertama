@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Produk</title>
+</head>
+
+<body>
+    <h2>Manajemen Produk Toko Pakaian</h2>
+
+    <!-- Form tambah produk -->
+    <label>Nama Produk: <input type="text" id="namaProduk"></label>
+    <label>Harga Produk: <input type="number" id="hargaProduk"></label>
+    <button id="btnTambah">Tambah Produk</button>
+    <br><br>
+
+    <button id="btnTampil">Tampilkan Semua Produk</button>
+    <br><br>
+
+    <label>Index Produk yang Dihapus: <input type="number" id="indexHapus"></label>
+    <button id="btnHapus">Hapus Produk</button>
+
+    <h3>Daftar Produk:</h3>
+    <ul id="listProduk"></ul>
+
+    <script>
+        //Data awal 
+        let daftarProduk = [
+            { nama: "Kemeja", harga: 750000 },
+            { nama: "Celana", harga: 500000 },
+            { nama: "Hijab", harga: 100000 },
+            { nama: "Jeans", harga: 250000 },
+            { nama: "Short Pants", harga: 250000 }
+        ];
+
+        //Fungsi tambah produk 
+        function tambahProduk(...produkBaru) {
+            daftarProduk = [...daftarProduk, ...produkBaru];
+            alert("Produk berhasil ditambahkan!");
+        }
+
+        //Fungsi hapus produk berdasarkan index
+        function hapusProduk(index) {
+            if (index >= 0 && index < daftarProduk.length) {
+                daftarProduk.splice(index, 1);
+                alert("Produk index " + index + " berhasil dihapus!");
+            } else {
+                alert("Index tidak valid!");
+            }
+        }
+
+        // Fungsi tampilkan semua produk (Destructuring)
+        function tampilkanProduk() {
+            const list = document.getElementById("listProduk");
+            list.innerHTML = "";
+            daftarProduk.forEach((produk, idx) => {
+                // Destructuring object produk
+                const { nama, harga } = produk;
+                const li = document.createElement("li");
+                li.textContent = `${idx + 1}. Nama: ${nama} - Harga: Rp${harga}`;
+                list.appendChild(li);
+            });
+        }
+
+        // Event listener tombol tambah
+        document.getElementById("btnTambah").addEventListener("click", () => {
+            const nama = document.getElementById("namaProduk").value;
+            const harga = parseInt(document.getElementById("hargaProduk").value);
+            if (nama && harga) {
+                tambahProduk({ nama, harga });
+                tampilkanProduk();
+            } else {
+                alert("Isi nama dan harga produk!");
+            }
+        });
+
+        // Event listener tombol tampil
+        document.getElementById("btnTampil").addEventListener("click", tampilkanProduk);
+
+        // Event listener tombol hapus
+        document.getElementById("btnHapus").addEventListener("click", () => {
+            const index = parseInt(document.getElementById("indexHapus").value);
+            hapusProduk(index);
+            tampilkanProduk();
+        });
+
+        // Tampilkan produk awal
+        tampilkanProduk();
+    </script>
+</body>
+
+</html>
