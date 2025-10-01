@@ -1,80 +1,140 @@
+import React, { useState } from "react";
+import booksData from "../../../utils/books";
+
 export default function ProductList() {
+    const [books, setBooks] = useState(booksData);
+
+    const [newBook, setNewBook] = useState({
+        title: "",
+        author: "",
+        description: "",
+        image: "",
+        price: "",
+    });
+
+    const handleChange = (e) => {
+        setNewBook({ ...newBook, [e.target.name]: e.target.value });
+    };
+
+    // Fungsi tambah buku baru
+    const handleAddBook = () => {
+        if (!newBook.title || !newBook.author) {
+            alert("Judul dan Penulis wajib diisi!");
+            return;
+        }
+
+        const bookToAdd = {
+            id: books.length + 1,
+            ...newBook,
+            price: parseInt(newBook.price) || 0,
+            image: newBook.image || "https://via.placeholder.com/150",
+        };
+
+        setBooks([...books, bookToAdd]);
+        setNewBook({ title: "", author: "", description: "", image: "", price: "" });
+    };
 
     return (
-        <>
-            <section id="book" className="py-5 text-center container">
-                <div className="row py-lg-5">
-                    <div className="col-lg-6 col-md-8 mx-auto">
-                        <h1 className="fw-light">Best Seller</h1>
-                        <p className="lead text-body-secondary">
-                            A glimpse into our top-selling favorites—crafted by talented creators, waiting for you below.
-                        </p>
-                        <p>
-                            <a href="#" className="btn btn-primary my-2 m-2">View</a>
-                            <a href="#" className="btn btn-secondary my-2">Other Book</a>
-                        </p>
+        <section className="container my-5">
+            <div className="row">
+                {books.map((book) => (
+                    <div key={book.id} className="col-md-4 mb-4">
+                        <div className="card h-100 shadow-sm">
+                            <img
+                                src={book.image}
+                                className="card-img-top"
+                                alt={book.title}
+                                style={{ height: "250px", objectFit: "cover" }}
+                            />
+                            <div className="card-body d-flex flex-column">
+                                <h5 className="card-title">{book.title}</h5>
+                                <p className="card-text">
+                                    <strong>{book.author}</strong>
+                                </p>
+                                <p className="card-text text-muted" style={{ fontSize: "0.9rem" }}>
+                                    {book.description}
+                                </p>
+
+                                <div className="d-flex justify-content-between align-items-center mt-auto">
+                                    <div className="btn-group mt-2">
+                                        <button type="button" className="btn btn-sm btn-outline-secondary">
+                                            View
+                                        </button>
+                                        <button type="button" className="btn btn-sm btn-outline-secondary">
+                                            Read
+                                        </button>
+                                    </div>
+                                    <small className="text-body-secondary">
+                                        Rp. {book.price.toLocaleString("id-ID")}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </section>
-            <div className="album py-5 bg-body-tertiary">
-                <div className="container">
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div className="col">
-                            <div className="card shadow-sm">
-                                <img src="https://i.pinimg.com/736x/da/a7/c1/daa7c1fc935e46c72d733073dd29bd5c.jpg" className="card-img-top" alt="Book 1" />
-                                <div className="card-body">
-                                    <p className="card-text mb-2">
-                                        Pasta Kacang Merah by Durian Sukegawa
-                                    </p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Read</button>
-                                        </div>
-                                        <small className="text-body-secondary">Rp. 175.000</small>
-                                    </div>
-                                </div>
-                            </div>
+                ))}
+
+                {/* Form Tambah Buku Baru */}
+                <div className="col-12 mt-5">
+                    <h3 className="mb-3"> == Tambah Buku Baru == </h3>
+                    <div className="row g-2">
+                        <div className="col-md-4">
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Judul Buku"
+                                className="form-control"
+                                value={newBook.title}
+                                onChange={handleChange}
+                            />
                         </div>
-                        <div className="col">
-                            <div className="card shadow-sm">
-                                <img src="https://i.pinimg.com/1200x/14/f9/73/14f973e92cca4791bd9674bd6f0d8162.jpg" className="card-img-top" alt="Book 1" />
-                                <div className="card-body">
-                                    <p className="card-text mb-2">
-                                        Sisi Tergelap Surga by Brian Khrisna
-                                    </p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Read</button>
-                                        </div>
-                                        <small className="text-body-secondary">Rp. 99.000</small>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="col-md-4">
+                            <input
+                                type="text"
+                                name="author"
+                                placeholder="Penulis"
+                                className="form-control"
+                                value={newBook.author}
+                                onChange={handleChange}
+                            />
                         </div>
-                        <div className="col">
-                            <div className="card shadow-sm">
-                                <img src="https://i.pinimg.com/1200x/e3/0c/32/e30c324d70e620d324bb620331785e6d.jpg" className="card-img-top" alt="Book 1" />
-                                <div className="card-body">
-                                    <p className="card-text mb-2">
-                                        Laut Bercerita by Leila S. Chudori
-                                    </p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Read</button>
-                                        </div>
-                                        <small className="text-body-secondary">Rp. 99.000</small>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="col-md-4">
+                            <input
+                                type="number"
+                                name="price"
+                                placeholder="Harga"
+                                className="form-control"
+                                value={newBook.price}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <input
+                                type="text"
+                                name="description"
+                                placeholder="Deskripsi"
+                                className="form-control"
+                                value={newBook.description}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <input
+                                type="text"
+                                name="image"
+                                placeholder="URL Gambar"
+                                className="form-control"
+                                value={newBook.image}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-12">
+                            <button onClick={handleAddBook} className="btn btn-success mt-3">
+                                Tambah Buku
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </>
-
-    )
+        </section>
+    );
 }
